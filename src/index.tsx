@@ -1,17 +1,20 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import reportWebVitals from './reportWebVitals';
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
+import reportWebVitals from "./reportWebVitals";
+import { Routes, Route } from "react-router-dom";
 
 // Find all widget divs
-const WidgetDivs = document.querySelectorAll('.json_widget');
+const WidgetDivs = document.querySelectorAll(".json_widget");
 
 // Inject our React App into each
 WidgetDivs.forEach((Div) => {
   ReactDOM.render(
     <React.StrictMode>
-      <App domElement={Div} />
+      <Routes>
+        <Route path="/" element={<App domElement={Div} />} />
+      </Routes>
     </React.StrictMode>,
     Div
   );
