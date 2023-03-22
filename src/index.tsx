@@ -3,31 +3,19 @@ import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { Route } from "react-router-dom";
 import LastName from "./LastName";
 
 // Find all widget divs
 const WidgetDivs = document.querySelectorAll(".json_widget");
-
-const getBrowserRouter = (Div: Element) => {
-  return createBrowserRouter([
-    {
-      path: "/",
-      element: <App domElement={Div} />,
-    },
-    {
-      path: "/lastName",
-      element: <LastName domElement={Div} />,
-    },
-  ]);
-};
 
 // Inject our React App into each
 WidgetDivs.forEach((Div) => {
   const root = createRoot(Div);
   root.render(
     <React.StrictMode>
-      <RouterProvider router={getBrowserRouter(Div)} />
+      <Route path="/" element={<App domElement={Div} />} />
+      <Route path="/lastName" element={<LastName domElement={Div} />} />
     </React.StrictMode>
   );
 });
