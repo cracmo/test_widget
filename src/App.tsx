@@ -26,7 +26,7 @@ function App({ domElement }: { domElement: Element }) {
           </Typography>
         </Box>
       </Box>
-      <Grid container spacing={2}>
+      {/* <Grid container spacing={2}>
         <Grid item xs={6}>
           <Box component={Paper} p={2}>
             <Typography variant="body2">XP Points</Typography>
@@ -43,7 +43,7 @@ function App({ domElement }: { domElement: Element }) {
             </Typography>
           </Box>
         </Grid>
-      </Grid>
+      </Grid> */}
     </Box>
   )
 }
