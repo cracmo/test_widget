@@ -1,9 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
-import App from './App'
 import reportWebVitals from './reportWebVitals'
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material'
+import { AvatarComponent } from './avatar.component'
 
 const theme = createTheme({
   palette: {
@@ -16,11 +16,12 @@ const WidgetDivs = document.querySelectorAll('.json_widget')
 
 // Inject our React App into each
 WidgetDivs.forEach((Div) => {
+  const type = Div.getAttribute('data-type') || ''
   ReactDOM.render(
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        <App domElement={Div} />
+        {type === 'avatar' && <AvatarComponent />}
       </ThemeProvider>
     </React.StrictMode>,
     Div,
