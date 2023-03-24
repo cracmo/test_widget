@@ -1,8 +1,14 @@
 import { Box, Avatar, CircularProgress } from '@mui/material'
-import AvatarImg from './assets/leo.png'
+import AvatarImg from './assets/avatar.png'
 
-export function AvatarComponent() {
-  const progress = 50
+type Props = {
+  size?: number
+}
+
+export function AvatarComponent({ size }: Props) {
+  const progress = 60
+
+  const transform = (size || 1) / 120
 
   return (
     <Box
@@ -11,6 +17,8 @@ export function AvatarComponent() {
         display: 'inline-flex',
         backgroundColor: 'gray',
         borderRadius: '50%',
+        transform: `scale(${transform})`,
+        transformOrigin: '0 0',
       }}
     >
       <Avatar

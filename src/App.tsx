@@ -6,10 +6,11 @@ import GoldMedalImg from './assets/gold.png'
 function App({ domElement }: { domElement: Element }) {
   const json = domElement.getAttribute('data-json') || ''
   const info = JSON.parse(json)
+  console.log(info)
   return (
     <Box m={2}>
       <Box display="flex" gap={1} alignItems="center" mb={2}>
-        <AvatarComponent />
+        <AvatarComponent size={info.size} />
         <Box>
           <Typography variant="h5">
             Hello, <strong>{`${info.firstName} ${info.lastName}`}</strong>

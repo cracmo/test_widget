@@ -17,11 +17,13 @@ const WidgetDivs = document.querySelectorAll('.json_widget')
 // Inject our React App into each
 WidgetDivs.forEach((Div) => {
   const type = Div.getAttribute('data-type') || ''
+  const json = Div.getAttribute('data-json') || ''
+  const info = JSON.parse(json)
   ReactDOM.render(
     <React.StrictMode>
       <ThemeProvider theme={theme}>
         <CssBaseline />
-        {type === 'avatar' && <AvatarComponent />}
+        {type === 'avatar' && <AvatarComponent size={info.size} />}
       </ThemeProvider>
     </React.StrictMode>,
     Div,
