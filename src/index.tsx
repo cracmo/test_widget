@@ -4,6 +4,7 @@ import './index.css'
 import reportWebVitals from './reportWebVitals'
 import { ThemeProvider, createTheme, CssBaseline } from '@mui/material'
 import { AvatarComponent } from './avatar.component'
+import { PointsComponent } from './points.component'
 
 const theme = createTheme({
   palette: {
@@ -24,6 +25,7 @@ WidgetDivs.forEach((Div) => {
       <ThemeProvider theme={theme}>
         <CssBaseline />
         {type === 'avatar' && <AvatarComponent size={info.size} />}
+        {type === 'points' && <PointsComponent />}
       </ThemeProvider>
     </React.StrictMode>,
     Div,
