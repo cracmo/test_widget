@@ -1,3 +1,4 @@
+import './init'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
@@ -36,3 +37,25 @@ WidgetDivs.forEach((Div) => {
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals()
+
+const EmbeddableWidget = (props: any) => {
+  console.log(props)
+
+  WidgetDivs.forEach((Div) => {
+    const type = Div.getAttribute('data-type') || ''
+    const json = Div.getAttribute('data-json') || ''
+    const info = JSON.parse(json)
+    ReactDOM.render(
+      <React.StrictMode>
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+          {type === 'avatar' && <AvatarComponent size={info.size} />}
+          {type === 'points' && <PointsComponent />}
+        </ThemeProvider>
+      </React.StrictMode>,
+      Div,
+    )
+  })
+}
+
+export default EmbeddableWidget
