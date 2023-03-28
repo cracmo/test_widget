@@ -13,7 +13,7 @@ import {
   Typography,
   Button,
 } from '@mui/material'
-import RewardShopImg from '../../assets/hero-reward-shop-mobile.png'
+import RewardShopImg from '../../assets/hero_reward_mobile.png'
 import { RewardShopContext } from './reward-shop.context'
 
 type ProductType = {
@@ -95,37 +95,33 @@ export function RewardShopComponent() {
       >
         <DialogContent>
           <Card elevation={0}>
-            <CardActionArea
-              onClick={() => handleOpenRewardModal(dialog.product)}
-            >
-              <img
-                width="100%"
-                src={dialog.product?.images[0]}
-                alt={dialog.product?.title}
-                style={{ maxHeight: 250, objectFit: 'contain' }}
-              />
-              <CardContent>
-                <Box
-                  display="flex"
-                  justifyContent="space-between"
-                  alignItems="center"
-                  mb={2}
-                >
-                  <Typography variant="h5" fontWeight={700}>
-                    {dialog.product?.title}
-                  </Typography>
-                  <Typography variant="body2">
-                    {`${dialog.product?.price} tokens`}
-                  </Typography>
-                </Box>
-                <Typography variant="body2" paragraph>
-                  {t('your_balance')}: 2400 tokens
+            <img
+              width="100%"
+              src={dialog.product?.images[0]}
+              alt={dialog.product?.title}
+              style={{ maxHeight: 250, objectFit: 'contain' }}
+            />
+            <CardContent>
+              <Box
+                display="flex"
+                justifyContent="space-between"
+                alignItems="center"
+                mb={2}
+              >
+                <Typography variant="h5" fontWeight={700}>
+                  {dialog.product?.title}
                 </Typography>
                 <Typography variant="body2">
-                  {dialog.product?.description}
+                  {`${dialog.product?.price} tokens`}
                 </Typography>
-              </CardContent>
-            </CardActionArea>
+              </Box>
+              <Typography variant="body2" paragraph>
+                {t('your_balance')}: 2400 tokens
+              </Typography>
+              <Typography variant="body2">
+                {dialog.product?.description}
+              </Typography>
+            </CardContent>
           </Card>
         </DialogContent>
         <DialogActions>
