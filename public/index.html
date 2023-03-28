@@ -28,16 +28,31 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div class="json_widget" data-json={"firstName":"Cris","lastName":"Acosta","username":"cracmo","username":"cracmo","size":60} data-type="avatar"></div>
+    <div class="gamification_widget" data-size="120" data-type="avatar"></div>
+    <div class="gamification_widget" data-type="points"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
-
+      
       You can add webfonts, meta tags, or analytics to this file.
       The build step will place the bundled scripts into the <body> tag.
-
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
+        
+        To begin the development, run `npm start` or `yarn start`.
+        To create a production bundle, use `npm run build` or `yarn build`.
+      -->
+      <script src="./bundle.min.js"></script>
+      <script>
+        EmbeddableWidget.config({
+          init: {
+            serviceUrl: 'https://api-jp.gamanza-engage.com',
+            clientId: '1w4j4nwn3n4n5n',
+            playerIdentityToken: 'd8s77df9ff9d8s7s7',
+            playerLocale: 'EN'
+          },
+          lookAndFeel: {
+            theme: 'dark'
+          }
+        });
+      </script>
   </body>
 </html>

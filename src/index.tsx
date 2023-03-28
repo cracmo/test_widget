@@ -1,61 +1,75 @@
 import './init'
 import React from 'react'
-import ReactDOM from 'react-dom'
-import './index.css'
+import * as ReactDOMClient from 'react-dom/client'
 import reportWebVitals from './reportWebVitals'
-import { ThemeProvider, createTheme, CssBaseline } from '@mui/material'
+import {
+  ThemeProvider,
+  createTheme,
+  CssBaseline,
+  PaletteMode,
+} from '@mui/material'
 import { AvatarComponent } from './avatar.component'
 import { PointsComponent } from './points.component'
 
-const theme = createTheme({
-  palette: {
-    mode: 'light',
-  },
-})
-
 // Find all widget divs
-const WidgetDivs = document.querySelectorAll('.json_widget')
-
-// Inject our React App into each
-WidgetDivs.forEach((Div) => {
-  const type = Div.getAttribute('data-type') || ''
-  const json = Div.getAttribute('data-json') || ''
-  const info = JSON.parse(json)
-  ReactDOM.render(
-    <React.StrictMode>
-      <ThemeProvider theme={theme}>
-        <CssBaseline />
-        {type === 'avatar' && <AvatarComponent size={info.size} />}
-        {type === 'points' && <PointsComponent />}
-      </ThemeProvider>
-    </React.StrictMode>,
-    Div,
-  )
-})
+const WidgetDivs = document.querySelectorAll('.gamification_widget')
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 reportWebVitals()
 
-const EmbeddableWidget = (props: any) => {
-  console.log(props)
+const EmbeddableWidget = () => {}
 
-  WidgetDivs.forEach((Div) => {
-    const type = Div.getAttribute('data-type') || ''
-    const json = Div.getAttribute('data-json') || ''
-    const info = JSON.parse(json)
-    ReactDOM.render(
-      <React.StrictMode>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          {type === 'avatar' && <AvatarComponent size={info.size} />}
-          {type === 'points' && <PointsComponent />}
-        </ThemeProvider>
-      </React.StrictMode>,
-      Div,
-    )
-  })
+EmbeddableWidget.config = (props: {
+  init: {
+    serviceUrl: string
+    clientId: string
+    playerIdentityToken: string
+    playerLocale: string
+  }
+  lookAndFeel?: {
+    theme: PaletteMode | undefined
+  }
+}) => {
+  const { init, lookAndFeel } = props
+
+  function getTheme() {
+    return createTheme({
+      palette: {
+        mode: lookAndFeel?.theme || 'light',
+      },
+    })
+  }
+
+  function render() {
+    localStorage && localStorage.setItem('config', JSON.stringify(init))
+
+    WidgetDivs.forEach((Div) => {
+      const root = ReactDOMClient.createRoot(Div)
+
+      const type = Div.getAttribute('data-type') || ''
+      const size = Div.getAttribute('data-size') || ''
+
+      root.render(
+        <React.StrictMode>
+          <ThemeProvider theme={getTheme()}>
+            <CssBaseline />
+            {type === 'avatar' && <AvatarComponent size={Number(size)} />}
+            {type === 'points' && <PointsComponent />}
+          </ThemeProvider>
+        </React.StrictMode>,
+      )
+    })
+  }
+
+  if (document.readyState === 'complete') {
+    render()
+  } else {
+    window.addEventListener('load', () => {
+      render()
+    })
+  }
 }
 
 export default EmbeddableWidget
