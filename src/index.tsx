@@ -6,10 +6,16 @@ import {
   ThemeProvider,
   createTheme,
   CssBaseline,
+  PaletteOptions,
   PaletteMode,
 } from '@mui/material'
 import { AvatarComponent } from './avatar.component'
 import { PointsComponent } from './points.component'
+import { RewardShopComponent } from './reward-shop.component'
+
+const palette = {
+  mode: 'light' as PaletteMode,
+}
 
 // Find all widget divs
 const WidgetDivs = document.querySelectorAll('.gamification_widget')
@@ -29,16 +35,14 @@ EmbeddableWidget.config = (props: {
     playerLocale: string
   }
   lookAndFeel?: {
-    theme: PaletteMode | undefined
+    palette: PaletteOptions
   }
 }) => {
   const { init, lookAndFeel } = props
 
   function getTheme() {
     return createTheme({
-      palette: {
-        mode: lookAndFeel?.theme || 'light',
-      },
+      palette: lookAndFeel?.palette || palette,
     })
   }
 
@@ -57,6 +61,7 @@ EmbeddableWidget.config = (props: {
             <CssBaseline />
             {type === 'avatar' && <AvatarComponent size={Number(size)} />}
             {type === 'points' && <PointsComponent />}
+            {type === 'reward-shop' && <RewardShopComponent />}
           </ThemeProvider>
         </React.StrictMode>,
       )

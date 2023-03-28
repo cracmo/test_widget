@@ -30,6 +30,7 @@
     <noscript>You need to enable JavaScript to run this app.</noscript>
     <div class="gamification_widget" data-size="120" data-type="avatar"></div>
     <div class="gamification_widget" data-type="points"></div>
+    <div class="gamification_widget" data-type="reward-shop"></div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
@@ -50,7 +51,17 @@
             playerLocale: 'EN'
           },
           lookAndFeel: {
-            theme: 'dark'
+            palette: {
+              // mode:'dark',
+              primary: {
+                main: '#ff4400',
+              },
+              secondary: {
+                light: '#0066ff',
+                main: '#0044ff',
+                contrastText: '#ffcc00',
+              },
+            }
           }
         });
       </script>
