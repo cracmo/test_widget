@@ -7,13 +7,10 @@ module.exports = {
       webpackConfig.output = {
         ...webpackConfig.output,
         library: 'EmbeddableWidget',
-        libraryTarget: "umd",
-        umdNamedDefine: true,
-        clean: true,
         path: path.resolve(__dirname, "docs"),
-        publicPath: '/',
-        filename: "bundle.min.js", // Important, the name of the exported bundle, always the same name.
+        filename: "bundle.min.js",
         libraryExport: 'default',
+        globalObject: 'self'
       }
       return webpackConfig;
     },

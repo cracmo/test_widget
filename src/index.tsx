@@ -1,29 +1,26 @@
 import './init'
 import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
-import reportWebVitals from './reportWebVitals'
+import i18next from 'i18next'
 import {
   ThemeProvider,
   createTheme,
-  CssBaseline,
   PaletteOptions,
   PaletteMode,
 } from '@mui/material'
-import { AvatarComponent } from './avatar.component'
-import { PointsComponent } from './points.component'
-import { RewardShopComponent } from './reward-shop.component'
+import {
+  AvatarComponent,
+  PointsComponent,
+  RewardShopComponent,
+  RewardShopProvider,
+} from './components'
+import './i18n.ts'
 
 const palette = {
   mode: 'light' as PaletteMode,
 }
 
-// Find all widget divs
 const WidgetDivs = document.querySelectorAll('.gamification_widget')
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
 
 const EmbeddableWidget = () => {}
 
@@ -37,8 +34,14 @@ EmbeddableWidget.config = (props: {
   lookAndFeel?: {
     palette: PaletteOptions
   }
+  translations?: {
+    locale: string
+    keys: {
+      [x: string]: string
+    }
+  }[]
 }) => {
-  const { init, lookAndFeel } = props
+  const { init, lookAndFeel, translations } = props
 
   function getTheme() {
     return createTheme({
@@ -49,6 +52,20 @@ EmbeddableWidget.config = (props: {
   function render() {
     localStorage && localStorage.setItem('config', JSON.stringify(init))
 
+    i18next.changeLanguage(init.playerLocale)
+
+    if (translations) {
+      translations.forEach((item) => {
+        i18next.addResourceBundle(
+          item.locale.toLowerCase(),
+          'translation',
+          item.keys,
+          true,
+          false,
+        )
+      })
+    }
+
     WidgetDivs.forEach((Div) => {
       const root = ReactDOMClient.createRoot(Div)
 
@@ -58,10 +75,13 @@ EmbeddableWidget.config = (props: {
       root.render(
         <React.StrictMode>
           <ThemeProvider theme={getTheme()}>
-            <CssBaseline />
             {type === 'avatar' && <AvatarComponent size={Number(size)} />}
             {type === 'points' && <PointsComponent />}
-            {type === 'reward-shop' && <RewardShopComponent />}
+            {type === 'reward-shop' && (
+              <RewardShopProvider>
+                <RewardShopComponent />
+              </RewardShopProvider>
+            )}
           </ThemeProvider>
         </React.StrictMode>,
       )

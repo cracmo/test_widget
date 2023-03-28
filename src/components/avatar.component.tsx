@@ -1,5 +1,5 @@
 import { Box, Avatar, CircularProgress } from '@mui/material'
-import AvatarImg from './assets/avatar.png'
+import AvatarImg from '../assets/avatar.png'
 
 type Props = {
   size?: number
