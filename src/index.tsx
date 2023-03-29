@@ -4,6 +4,7 @@ import * as ReactDOMClient from 'react-dom/client'
 import i18next from 'i18next'
 import {
   createTheme,
+  CssBaseline,
   PaletteOptions,
   PaletteMode,
   ThemeProvider,
@@ -42,60 +43,63 @@ const palette = {
 
 const WidgetDivs = document.querySelectorAll('.gamification_widget')
 
-const GamificationWidgets = () => {}
+function GamificationWidgets() {
+  const config = ({
+    init,
+    lookAndFeel,
+    translations,
+    assets,
+    callbacks,
+  }: ConfigProps) => {
+    function getTheme() {
+      return createTheme({
+        palette: lookAndFeel?.palette || palette,
+      })
+    }
 
-GamificationWidgets.config = ({
-  init,
-  lookAndFeel,
-  translations,
-  assets,
-  callbacks,
-}: ConfigProps) => {
-  function getTheme() {
-    return createTheme({
-      palette: lookAndFeel?.palette || palette,
-    })
-  }
+    function render() {
+      localStorage && localStorage.setItem('config', JSON.stringify(init))
 
-  function render() {
-    localStorage && localStorage.setItem('config', JSON.stringify(init))
+      i18next.changeLanguage(init.playerLocale)
 
-    i18next.changeLanguage(init.playerLocale)
+      if (translations) {
+        translations.forEach((item) => {
+          i18next.addResourceBundle(
+            item.locale.toLowerCase(),
+            'translation',
+            item.keys,
+            true,
+            false,
+          )
+        })
+      }
 
-    if (translations) {
-      translations.forEach((item) => {
-        i18next.addResourceBundle(
-          item.locale.toLowerCase(),
-          'translation',
-          item.keys,
-          true,
-          false,
+      WidgetDivs.forEach((Div) => {
+        const root = ReactDOMClient.createRoot(Div)
+
+        root.render(
+          <React.StrictMode>
+            <ThemeProvider theme={getTheme()}>
+              <CssBaseline />
+              <AssetsProvider>
+                <App Div={Div} assets={assets} callbacks={callbacks} />
+              </AssetsProvider>
+            </ThemeProvider>
+          </React.StrictMode>,
         )
       })
     }
 
-    WidgetDivs.forEach((Div) => {
-      const root = ReactDOMClient.createRoot(Div)
-
-      root.render(
-        <React.StrictMode>
-          <ThemeProvider theme={getTheme()}>
-            <AssetsProvider>
-              <App Div={Div} assets={assets} callbacks={callbacks} />
-            </AssetsProvider>
-          </ThemeProvider>
-        </React.StrictMode>,
-      )
-    })
-  }
-
-  if (document.readyState === 'complete') {
-    render()
-  } else {
-    window.addEventListener('load', () => {
+    if (document.readyState === 'complete') {
       render()
-    })
+    } else {
+      window.addEventListener('load', () => {
+        render()
+      })
+    }
   }
+
+  return { config }
 }
 
-export default GamificationWidgets
+export default GamificationWidgets()
