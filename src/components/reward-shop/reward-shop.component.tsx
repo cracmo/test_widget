@@ -24,7 +24,13 @@ type ProductType = {
   images: string[]
 }
 
-export function RewardShopComponent() {
+type Props = {
+  callbacks?: {
+    next_btn?: (props: any) => void
+  }
+}
+
+export function RewardShopComponent({ callbacks }: Props) {
   const { t } = useTranslation()
 
   const { cart, setCart } = useContext(RewardShopContext)
@@ -47,11 +53,12 @@ export function RewardShopComponent() {
       .then((actualData) => setProducts(actualData.products))
   }, [])
 
-  const handleOpenRewardModal = (product: any) => {
+  const handleOpenRewardModal = (product: ProductType) => {
     setDialog({
       open: true,
       product,
     })
+    callbacks?.next_btn && callbacks?.next_btn('next_btn clicked')
   }
 
   return (

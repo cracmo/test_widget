@@ -12,15 +12,7 @@ import { AssetsProvider, AssetsType } from './components'
 import { App } from './App'
 import './i18n.ts'
 
-const palette = {
-  mode: 'light' as PaletteMode,
-}
-
-const WidgetDivs = document.querySelectorAll('.gamification_widget')
-
-const EmbeddableWidget = () => {}
-
-EmbeddableWidget.config = (props: {
+export type ConfigProps = {
   init: {
     serviceUrl: string
     clientId: string
@@ -37,9 +29,28 @@ EmbeddableWidget.config = (props: {
     }
   }[]
   assets?: AssetsType
-}) => {
-  const { init, lookAndFeel, translations, assets } = props
+  callbacks?: {
+    reward_shop?: {
+      next_btn?: (props: any) => void
+    }
+  }
+}
 
+const palette = {
+  mode: 'light' as PaletteMode,
+}
+
+const WidgetDivs = document.querySelectorAll('.gamification_widget')
+
+const GamificationWidgets = () => {}
+
+GamificationWidgets.config = ({
+  init,
+  lookAndFeel,
+  translations,
+  assets,
+  callbacks,
+}: ConfigProps) => {
   function getTheme() {
     return createTheme({
       palette: lookAndFeel?.palette || palette,
@@ -70,7 +81,7 @@ EmbeddableWidget.config = (props: {
         <React.StrictMode>
           <ThemeProvider theme={getTheme()}>
             <AssetsProvider>
-              <App Div={Div} assets={assets} />
+              <App Div={Div} assets={assets} callbacks={callbacks} />
             </AssetsProvider>
           </ThemeProvider>
         </React.StrictMode>,
@@ -87,4 +98,4 @@ EmbeddableWidget.config = (props: {
   }
 }
 
-export default EmbeddableWidget
+export default GamificationWidgets

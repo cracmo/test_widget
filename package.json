@@ -1,5 +1,5 @@
 {
-  "name": "my-app",
+  "name": "gamification-widgets",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -24,7 +24,6 @@
   "scripts": {
     "start": "craco start",
     "build": "craco build",
-    "build:widget": "parcel build src/index.tsx --no-source-maps --dist-dir docs --no-cache",
     "test": "craco test",
     "eject": "react-scripts eject"
   },

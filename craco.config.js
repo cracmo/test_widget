@@ -6,7 +6,7 @@ module.exports = {
     configure: (webpackConfig, { env, paths }) => {
       webpackConfig.output = {
         ...webpackConfig.output,
-        library: 'EmbeddableWidget',
+        library: 'GamificationWidgets',
         path: path.resolve(__dirname, "docs"),
         filename: "bundle.min.js",
         libraryExport: 'default',
