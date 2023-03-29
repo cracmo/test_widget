@@ -1,6 +1,4 @@
-import './init'
 import { useContext } from 'react'
-import { ThemeProvider, Theme } from '@mui/material'
 import {
   AssetsContext,
   AssetsType,
@@ -12,11 +10,10 @@ import {
 
 type Props = {
   Div: Element
-  getTheme: () => Theme
   assets?: AssetsType
 }
 
-export function App({ Div, getTheme, assets }: Props) {
+export function App({ Div, assets }: Props) {
   const { setImages } = useContext(AssetsContext)
 
   assets && setImages(assets)
@@ -25,7 +22,7 @@ export function App({ Div, getTheme, assets }: Props) {
   const size = Div.getAttribute('data-size') || ''
 
   return (
-    <ThemeProvider theme={getTheme()}>
+    <>
       {type === 'avatar' && <AvatarComponent size={Number(size)} />}
       {type === 'points' && <PointsComponent />}
       {type === 'reward-shop' && (
@@ -33,6 +30,6 @@ export function App({ Div, getTheme, assets }: Props) {
           <RewardShopComponent />
         </RewardShopProvider>
       )}
-    </ThemeProvider>
+    </>
   )
 }

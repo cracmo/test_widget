@@ -1,7 +1,13 @@
+import './init'
 import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import i18next from 'i18next'
-import { createTheme, PaletteOptions, PaletteMode } from '@mui/material'
+import {
+  createTheme,
+  PaletteOptions,
+  PaletteMode,
+  ThemeProvider,
+} from '@mui/material'
 import { AssetsProvider, AssetsType } from './components'
 import { App } from './App'
 import './i18n.ts'
@@ -62,9 +68,11 @@ EmbeddableWidget.config = (props: {
 
       root.render(
         <React.StrictMode>
-          <AssetsProvider>
-            <App Div={Div} getTheme={getTheme} assets={assets} />
-          </AssetsProvider>
+          <ThemeProvider theme={getTheme()}>
+            <AssetsProvider>
+              <App Div={Div} assets={assets} />
+            </AssetsProvider>
+          </ThemeProvider>
         </React.StrictMode>,
       )
     })
