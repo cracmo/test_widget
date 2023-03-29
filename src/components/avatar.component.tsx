@@ -1,9 +1,11 @@
 import { Box, Avatar, CircularProgress } from '@mui/material'
-import AvatarImg from '../assets/avatar.png'
 
 type Props = {
   size?: number
 }
+
+const AvatarImg =
+  'https://firebasestorage.googleapis.com/v0/b/crm-jackpots.appspot.com/o/jp-dev%2FCris%2Fduck.jpg?alt=media&token=3e235a2e-2895-4fec-8c26-01d6626a9f49'
 
 export function AvatarComponent({ size }: Props) {
   const progress = 60

@@ -1,8 +1,6 @@
 {
   "files": {
     "main.js": "/bundle.min.js",
-    "static/media/hero_reward_mobile.png": "/static/media/hero_reward_mobile.09fc1aac826d461aa9fc.png",
-    "static/media/avatar.png": "/static/media/avatar.db0b51e6edb529ebdfa5.png",
     "index.html": "/index.html",
     "bundle.min.js.map": "/bundle.min.js.map"
   },
