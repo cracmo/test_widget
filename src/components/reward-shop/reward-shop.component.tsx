@@ -14,6 +14,7 @@ import {
   Button,
 } from '@mui/material'
 import { RewardShopContext } from './reward-shop.context'
+import { AssetsContext, RewardShopImg } from '../assets'
 
 type ProductType = {
   id: number
@@ -23,13 +24,12 @@ type ProductType = {
   images: string[]
 }
 
-const RewardShopImg =
-  'https://firebasestorage.googleapis.com/v0/b/crm-jackpots.appspot.com/o/jp-dev%2FCris%2Fhero-reward-shop-mobile.png?alt=media&token=c79a5c20-0f5d-4134-8898-bdab94dfcc5a'
-
 export function RewardShopComponent() {
   const { t } = useTranslation()
 
   const { cart, setCart } = useContext(RewardShopContext)
+
+  const { images } = useContext(AssetsContext)
 
   const [dialog, setDialog] = useState<{
     open: boolean
@@ -59,14 +59,14 @@ export function RewardShopComponent() {
       <Box p={2}>
         <CardMedia
           sx={{ width: '100%', height: 250, backgroundSize: 'contain', mb: 2 }}
-          image={RewardShopImg}
+          image={images?.reward_shop_image || RewardShopImg}
           title="reward shop"
         />
         <Typography variant="h4" fontWeight={700} paragraph>
           {t('reward_shop')}
         </Typography>
         <Typography paragraph>{t('reward_shop_description')}</Typography>
-        <Grid container spacing={2}>
+        <Grid container spacing={2} my={2}>
           {products.map((product) => (
             <Grid key={product.id} item xs={12} sm={6} md={4} lg={3}>
               <Card elevation={0}>

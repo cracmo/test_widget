@@ -1,13 +1,14 @@
+import { useContext } from 'react'
 import { Box, Avatar, CircularProgress } from '@mui/material'
+import { AssetsContext, AvatarImg } from './assets'
 
 type Props = {
   size?: number
 }
 
-const AvatarImg =
-  'https://firebasestorage.googleapis.com/v0/b/crm-jackpots.appspot.com/o/jp-dev%2FCris%2Fduck.jpg?alt=media&token=3e235a2e-2895-4fec-8c26-01d6626a9f49'
-
 export function AvatarComponent({ size }: Props) {
+  const { images } = useContext(AssetsContext)
+
   const progress = 60
 
   const transform = (size || 1) / 120
@@ -35,14 +36,14 @@ export function AvatarComponent({ size }: Props) {
           height: 100,
         }}
         alt="Remy Sharp"
-        src={AvatarImg}
+        src={images?.avatar_image || AvatarImg}
       />
       <CircularProgress
         variant="determinate"
         value={progress}
         size={120}
         sx={{
-          color: '#7750F9',
+          color: 'primary.main',
           circle: {
             strokeLinecap: 'round',
           },

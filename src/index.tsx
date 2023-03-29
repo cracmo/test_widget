@@ -1,19 +1,9 @@
-import './init'
 import React from 'react'
 import * as ReactDOMClient from 'react-dom/client'
 import i18next from 'i18next'
-import {
-  ThemeProvider,
-  createTheme,
-  PaletteOptions,
-  PaletteMode,
-} from '@mui/material'
-import {
-  AvatarComponent,
-  PointsComponent,
-  RewardShopComponent,
-  RewardShopProvider,
-} from './components'
+import { createTheme, PaletteOptions, PaletteMode } from '@mui/material'
+import { AssetsProvider, AssetsType } from './components'
+import { App } from './App'
 import './i18n.ts'
 
 const palette = {
@@ -40,8 +30,9 @@ EmbeddableWidget.config = (props: {
       [x: string]: string
     }
   }[]
+  assets?: AssetsType
 }) => {
-  const { init, lookAndFeel, translations } = props
+  const { init, lookAndFeel, translations, assets } = props
 
   function getTheme() {
     return createTheme({
@@ -69,20 +60,11 @@ EmbeddableWidget.config = (props: {
     WidgetDivs.forEach((Div) => {
       const root = ReactDOMClient.createRoot(Div)
 
-      const type = Div.getAttribute('data-type') || ''
-      const size = Div.getAttribute('data-size') || ''
-
       root.render(
         <React.StrictMode>
-          <ThemeProvider theme={getTheme()}>
-            {type === 'avatar' && <AvatarComponent size={Number(size)} />}
-            {type === 'points' && <PointsComponent />}
-            {type === 'reward-shop' && (
-              <RewardShopProvider>
-                <RewardShopComponent />
-              </RewardShopProvider>
-            )}
-          </ThemeProvider>
+          <AssetsProvider>
+            <App Div={Div} getTheme={getTheme} assets={assets} />
+          </AssetsProvider>
         </React.StrictMode>,
       )
     })
